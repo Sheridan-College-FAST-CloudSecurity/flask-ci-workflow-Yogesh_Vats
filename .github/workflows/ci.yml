@@ -1,4 +1,4 @@
-name: CI Workflow
+name: CI Workflow week5
 
 on:
   push:
@@ -9,6 +9,10 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, ubuntu-22.04, ubuntu-20.04]
 
     steps:
     - name: Checkout repository
