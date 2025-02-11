@@ -33,20 +33,19 @@ jobs:
       run: |
         pytest test_app.py
 
-
-          - name: Configure AWS Credentials
-    uses: aws-actions/configure-aws-credentials@v3
-    with:
-      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-      aws-region: us-east-1
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v3
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+        aws-region: us-east-1
 
     - name: Log in to Amazon ECR
-    run: |
-      aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 027308965840.dkr.ecr.us-east-1.amazonaws.com
+      run: |
+        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 027308965840.dkr.ecr.us-east-1.amazonaws.com
 
-     -name: Push Docker Image to Amazon ECR
-    run: |
-      docker tag flask-ci:latest 027308965840.dkr.ecr.us-east-1.amazonaws.com/flask-ci:latest
-      docker push 027308965840.dkr.ecr.us-east-1.amazonaws.com/flask-ci:latest
+    - name: Push Docker Image to Amazon ECR
+      run: |
+        docker tag flask-ci:latest 027308965840.dkr.ecr.us-east-1.amazonaws.com/flask-ci:latest
+        docker push 027308965840.dkr.ecr.us-east-1.amazonaws.com/flask-ci:latest
